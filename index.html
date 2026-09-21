@@ -1,457 +1,650 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
+
 <meta name="google-site-verification" content="yZuJjeJktUc1aZ2m0CJUcgWugnR9rlOMhaHzUq3-Q5c" />
-    <!-- Google tag (gtag.js) -->
+
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JY9RDZ2EYJ"></script>
+
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-JY9RDZ2EYJ');
+function gtag(){
+    dataLayer.push(arguments);
+}
+
+gtag('js', new Date());
+
+gtag('config', 'G-JY9RDZ2EYJ');
 </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>rodersam58 - мой сайт</title>
+<meta charset="UTF-8">
 
-    <meta name="description"
-    content="офицалный сайт rodersam58">
-    
-    <style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * {
-            box-sizing: border-box;
-        }
+<title>rodersam58 - мой сайт</title>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            text-align: center;
-            color: #222;
-        }
+<meta name="description"
+content="офицалный сайт rodersam58">
 
-        /* Верхняя часть сайта */
+<style>
 
-        header {
-            background: #222;
-            color: white;
-            padding: 30px 15px;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        h1 {
-            margin: 0 0 20px;
-            font-size: 30px;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    text-align: center;
+    color: #222;
+}
 
-        .search {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+/* Верхняя часть сайта */
 
-        input {
-            width: 60%;
-            max-width: 500px;
-            padding: 14px;
-            font-size: 17px;
-            border: none;
-            border-radius: 8px;
-            outline: none;
-        }
+header {
+    background: #222;
+    color: white;
+    padding: 30px 15px;
+}
 
-        button {
-            padding: 14px 20px;
-            font-size: 17px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+h1 {
+    margin: 0 0 20px;
+    font-size: 30px;
+}
 
-        button:hover {
-            background: #ddd;
-        }
+.search {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-        .all-button {
-            margin-top: 15px;
-            background: #444;
-            color: white;
-        }
+input {
+    width: 60%;
+    max-width: 500px;
+    padding: 14px;
+    font-size: 17px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+}
 
-        .all-button:hover {
-            background: #666;
-        }
+button {
+    padding: 14px 20px;
+    font-size: 17px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-        /* Результаты */
+button:hover {
+    background: #ddd;
+}
 
-        #results {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 0 15px;
-        }
+.all-button {
+    margin-top: 15px;
+    background: #444;
+    color: white;
+}
 
-        .result {
-            background: white;
-            margin: 20px 0;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            animation: appear 0.3s ease;
-        }
+.all-button:hover {
+    background: #666;
+}
 
-        .result h2 {
-            margin-top: 0;
-            font-size: 24px;
-        }
+/* Результаты */
 
-        .result p {
-            color: #555;
-            font-size: 16px;
-        }
+#results {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
 
-        /* Фотографии */
+.result {
+    background: white;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    animation: appear 0.3s ease;
+}
 
-        .result img {
-            max-width: 100%;
-            width: 600px;
-            border-radius: 10px;
-            margin-top: 10px;
-        }
+.result h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
 
-        /* Видео */
+.result p {
+    color: #555;
+    font-size: 16px;
+}
 
-        .result video {
-            max-width: 100%;
-            width: 600px;
-            border-radius: 10px;
-            margin-top: 10px;
-            background: black;
-        }
+/* Фотографии */
 
-        /* Если ничего не найдено */
+.result img {
+    max-width: 100%;
+    width: 600px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
 
-        .not-found {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+/* Видео */
 
-        /* Анимация появления */
+.result video {
+    max-width: 100%;
+    width: 600px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background: black;
+}
 
-        @keyframes appear {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
+/* Если ничего не найдено */
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.not-found {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-        /* Адаптация для телефона */
+/* Анимация появления */
 
-        @media (max-width: 600px) {
+@keyframes appear {
 
-            h1 {
-                font-size: 23px;
-            }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
 
-            input {
-                width: 100%;
-            }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-            button {
-                width: auto;
-            }
+}
 
-            .result {
-                padding: 15px;
-            }
+/* Адаптация для телефона */
 
-        }
+@media (max-width: 600px) {
 
-    </style>
+    h1 {
+        font-size: 23px;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    button {
+        width: auto;
+    }
+
+    .result {
+        padding: 15px;
+    }
+
+}
+
+
+/* =========================================
+   ОКНО ВВОДА ИМЕНИ
+   ========================================= */
+
+.name-box {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 9999;
+
+}
+
+.name-form {
+
+    background: white;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    width: 90%;
+
+    max-width: 400px;
+
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+
+}
+
+.name-form h2 {
+
+    margin-top: 0;
+
+}
+
+.name-form input {
+
+    width: 100%;
+
+    border: 1px solid #ccc;
+
+    margin-bottom: 15px;
+
+}
+
+.name-form button {
+
+    background: #222;
+
+    color: white;
+
+    width: 100%;
+
+}
+
+.name-form button:hover {
+
+    background: #444;
+
+}
+
+#nameMessage {
+
+    margin-top: 15px;
+
+}
+
+</style>
 
 </head>
 
 
 <body>
 
-    <header>
 
-        <h1>ЭТО МОЙ ПЕРВЫЙ САЙТ</h1>
+<!-- =========================================
+     ОКНО ВВОДА ИМЕНИ
+     ========================================= -->
 
-        <div class="search">
+<div class="name-box" id="nameBox">
 
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Что хотите найти?"
-            >
+    <div class="name-form">
 
-            <button onclick="search()">
-                Поиск
-            </button>
+        <h2>Добро пожаловать!</h2>
+
+        <p>Введите ваше имя:</p>
+
+        <input
+            type="text"
+            id="visitorName"
+            placeholder="Ваше имя"
+            maxlength="50"
+        >
+
+        <button onclick="sendVisitorName()">
+            Войти
+        </button>
+        <div id="nameMessage"></div>
+
+    </div>
+
+</div>
+
+
+<header>
+
+    <h1>ЭТО МОЙ ПЕРВЫЙ САЙТ</h1>
+
+    <div class="search">
+
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Что хотите найти?"
+        >
+
+        <button onclick="search()">
+            Поиск
+        </button>
+
+    </div>
+
+
+    <button class="all-button" onclick="showAll()">
+        Показать все фотографии и видео
+    </button>
+
+</header>
+
+
+<div id="results"></div>
+
+
+<script>
+
+
+/* =========================================
+   ОТПРАВКА ИМЕНИ ПОСЕТИТЕЛЯ
+   ========================================= */
+
+async function sendVisitorName() {
+
+    const nameInput =
+        document.getElementById("visitorName");
+
+    const message =
+        document.getElementById("nameMessage");
+
+    const name =
+        nameInput.value.trim();
+
+
+    if (name === "") {
+
+        message.textContent =
+            "Введите имя.";
+
+        return;
+
+    }
+
+
+    message.textContent =
+        "Отправка...";
+
+
+    try {
+
+        const response = await fetch(
+            "ТВОЙ_URL_СЕРВЕРА",
+            {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    name: name
+                })
+
+            }
+        );
+
+
+        if (response.ok) {
+
+            document
+                .getElementById("nameBox")
+                .style.display = "none";
+
+        } else {
+
+            message.textContent =
+                "Не удалось отправить имя.";
+
+        }
+
+
+    } catch (error) {
+
+        message.textContent =
+            "Ошибка соединения.";
+
+    }
+
+}
+
+
+/*
+=====================================================
+БАЗА ДАННЫХ САЙТА
+=====================================================
+*/
+
+const pages = [
+
+    // ФОТОГРАФИЯ №1
+
+    {
+        title: "shaxob",
+        text: "shaxob",
+        image: "111.jpg"
+    },
+
+
+    // ВИДЕО №1
+
+    {
+        title: "Моё первое видео",
+        text: "Видео с прогулки",
+        video: "video (2).mp4"
+    },
+
+
+    // ВИДЕО №2
+
+    {
+        title: "видео",
+        text: "Красивое видео",
+        video: "lv_0_20260918160833.mp4"
+    },
+
+
+    // ЕЩЁ ОДНА ФОТОГРАФИЯ
+
+    {
+        title: "Фотография с путешествия",
+        text: "Фото из поездки",
+        image: "photo2.jpg"
+    }
+
+];
+
+
+/*
+=====================================================
+ФУНКЦИЯ ПОКАЗА РЕЗУЛЬТАТОВ
+=====================================================
+*/
+
+function showResults(list) {
+
+    const results =
+        document.getElementById("results");
+
+
+    results.innerHTML = list.map(page => 
+
+        <div class="result">
+
+            <h2>${page.title}</h2>
+
+            <p>${page.text}</p>
+
+
+            ${
+                page.image
+                ?
+
+                
+                <img
+                    src="${page.image}"
+                    alt="${page.title}"
+                    onerror="this.style.display='none'"
+                >
+                
+
+                :
+
+                ""
+            }
+
+
+            ${
+                page.video
+                ?
+
+                
+                <video controls preload="metadata">
+
+                    <source
+                        src="${page.video}"
+                        type="video/mp4"
+                    >
+
+                    Ваш браузер не поддерживает
+                    воспроизведение видео.
+
+                </video>
+                
+
+                :
+
+                ""
+            }
 
         </div>
 
+    ).join("");
 
-        <button class="all-button" onclick="showAll()">
-            Показать все фотографии и видео
-        </button>
+}
 
-    </header>
 
+/*
+=====================================================
+ПОКАЗАТЬ ВСЕ ФАЙЛЫ
+=====================================================
+*/
 
-    <div id="results"></div>
+function showAll() {
 
+    showResults(pages);
 
-    <script>
+}
 
-        /*
-        =====================================================
-        БАЗА ДАННЫХ САЙТА
-        =====================================================
 
-        Здесь добавляются все фотографии и видео.
+/*
+=====================================================
+ФУНКЦИЯ ПОИСКА
+=====================================================
+*/
 
-        Для фотографии используй:
-        image: "название-файла.jpg"
+function search() {
 
-        Для видео используй:
-        video: "название-файла.mp4"
+    const query =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
 
-        Можно добавлять сколько угодно объектов.
-        */
 
-
-        const pages = [
-
-            // ФОТОГРАФИЯ №1
-
-            {
-                title: "shaxob",
-                text: "shaxob",
-                image: "111.jpg"
-            },
-
-
-            // ВИДЕО №1
-
-            {
-                title: "Моё первое видео",
-                text: "Видео с прогулки",
-                video: "video (2).mp4"
-            },
-
-
-            // ВИДЕО №2
-
-            {
-                title: "видео",
-                text: "Красивое видео",
-                video: "lv_0_20260918160833.mp4"
-            },
-
-
-            // ЕЩЁ ОДНА ФОТОГРАФИЯ
-
-            {
-                title: "Фотография с путешествия",
-                text: "Фото из поездки",
-                image: "photo2.jpg"
-            }
-
-        ];
-
-
-        /*
-        =====================================================
-        ФУНКЦИЯ ПОКАЗА РЕЗУЛЬТАТОВ
-        =====================================================
-        */
-
-
-        function showResults(list) {
-
-            const results = document.getElementById("results");
-
-
-            results.innerHTML = list.map(page => `
-
-                <div class="result">
-
-                    <h2>${page.title}</h2>
-
-                    <p>${page.text}</p>
-
-
-                    ${
-                        page.image
-                        ?
-
-                        `
-                        <img
-                            src="${page.image}"
-                            alt="${page.title}"
-                            onerror="this.style.display='none'"
-                        >
-                        `
-
-                        :
-
-                        ""
-                    }
-
-
-                    ${
-                        page.video
-                        ?
-
-                        `
-                        <video controls preload="metadata">
-
-                            <source
-                                src="${page.video}"
-                                type="video/mp4"
-                            >
-
-                            Ваш браузер не поддерживает воспроизведение видео.
-
-                        </video>
-                        `
-
-                        :
-
-                        ""
-                    }
-
-                </div>
-
-            `).join("");
-
-        }
-
-
-        /*
-        =====================================================
-        ПОКАЗАТЬ ВСЕ ФАЙЛЫ
-        =====================================================
-        */
-
-
-        function showAll() {
-
-            showResults(pages);
-
-        }
-
-
-        /*
-        =====================================================
-        ФУНКЦИЯ ПОИСКА
-        =====================================================
-        */
-
-
-        function search() {
-
-            const query = document
-                .getElementById("searchInput")
-                .value
-                .toLowerCase()
-                .trim();
-
-
-            // Если пользователь ничего не ввёл
-
-            if (query === "") {
-
-                document.getElementById("results").innerHTML = "";
-
-                return;
-
-            }
-
-
-            /*
-            Ищем одновременно:
-            - по названию;
-            - по описанию.
-            */
-
-
-            const found = pages.filter(page =>
-
-                page.title.toLowerCase().includes(query)
-
-                ||
-
-                page.text.toLowerCase().includes(query)
-
-            );
-
-
-            // Если ничего не найдено
-
-            if (found.length === 0) {
-
-                document.getElementById("results").innerHTML = `
-
-                    <div class="not-found">
-
-                        <h2>Ничего не найдено</h2>
-
-                        <p>Попробуйте изменить поисковый запрос.</p>
-
-                    </div>
-
-                `;
-
-                return;
-
-            }
-
-
-            // Показываем найденные результаты
-
-            showResults(found);
-
-        }
-
-
-        /*
-        =====================================================
-        ПОИСК ПРИ НАЖАТИИ ENTER
-        =====================================================
-        */
-
+    // Если пользователь ничего не ввёл
+    if (query === "") {
 
         document
-            .getElementById("searchInput")
-            .addEventListener("keydown", function(event) {
+            .getElementById("results")
+            .innerHTML = "";
 
-                if (event.key === "Enter") {
+        return;
 
-                    search();
-
-                }
-
-            });
+    }
 
 
-    </script>
+    /*
+    Ищем одновременно:
+    - по названию;
+    - по описанию.
+    */
+
+    const found = pages.filter(page =>
+
+        page.title
+            .toLowerCase()
+            .includes(query)
+
+        ||
+
+        page.text
+            .toLowerCase()
+            .includes(query)
+
+    );
+
+
+    // Если ничего не найдено
+
+    if (found.length === 0) {
+
+        document
+            .getElementById("results")
+            .innerHTML = 
+
+            <div class="not-found">
+
+                <h2>Ничего не найдено</h2>
+
+                <p>
+                    Попробуйте изменить поисковый запрос.
+                </p>
+
+            </div>
+
+        ;
+
+        return;
+
+    }
+
+
+    // Показываем найденные результаты
+
+    showResults(found);
+
+}
+
+
+/*
+=====================================================
+ПОИСК ПРИ НАЖАТИИ ENTER
+=====================================================
+*/
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                search();
+
+            }
+
+        }
+    );
+
+
+</script>
 
 </body>
 
 </html>
-```
