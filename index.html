@@ -3,31 +3,13 @@
 
 <head>
 
-<meta name="google-site-verification" content="yZuJjeJktUc1aZ2m0CJUcgWugnR9rlOMhaHzUq3-Q5c" />
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JY9RDZ2EYJ"></script>
-
-<script>
-window.dataLayer = window.dataLayer || [];
-
-function gtag(){
-    dataLayer.push(arguments);
-}
-
-gtag('js', new Date());
-
-gtag('config', 'G-JY9RDZ2EYJ');
-</script>
-
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>rodersam58 - мой сайт</title>
 
-<meta name="description"
-content="офицалный сайт rodersam58">
+<meta name="description" content="официальный сайт rodersam58">
 
 <style>
 
@@ -42,8 +24,6 @@ body {
     text-align: center;
     color: #222;
 }
-
-/* Верхняя часть сайта */
 
 header {
     background: #222;
@@ -83,7 +63,7 @@ button {
 }
 
 button:hover {
-    background: #ddd;
+    filter: brightness(1.15);
 }
 
 .all-button {
@@ -91,12 +71,6 @@ button:hover {
     background: #444;
     color: white;
 }
-
-.all-button:hover {
-    background: #666;
-}
-
-/* Результаты */
 
 #results {
     max-width: 900px;
@@ -110,7 +84,6 @@ button:hover {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    animation: appear 0.3s ease;
 }
 
 .result h2 {
@@ -120,531 +93,143 @@ button:hover {
 
 .result p {
     color: #555;
-    font-size: 16px;
 }
 
-/* Фотографии */
-
-.result img {
-    max-width: 100%;
-    width: 600px;
-    border-radius: 10px;
-    margin-top: 10px;
-}
-
-/* Видео */
-
+.result img,
 .result video {
     max-width: 100%;
     width: 600px;
     border-radius: 10px;
     margin-top: 10px;
-    background: black;
 }
 
-/* Если ничего не найдено */
+.result video {
+    background: black;
+}
 
 .not-found {
     background: white;
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Анимация появления */
-
-@keyframes appear {
-
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-}
-
-/* Адаптация для телефона */
-
-@media (max-width: 600px) {
-
-    h1 {
-        font-size: 23px;
-    }
-
-    input {
-        width: 100%;
-    }
-
-    button {
-        width: auto;
-    }
-
-    .result {
-        padding: 15px;
-    }
-
 }
 
 
-/* =========================================
-   ОКНО ВВОДА ИМЕНИ
-   ========================================= */
+/* =========================
+   ИГРА
+========================= */
 
-.name-box {
+.game-section {
+    max-width: 920px;
+    margin: 40px auto;
+    padding: 20px;
+}
 
-    position: fixed;
+.game-section h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
 
-    top: 0;
-    left: 0;
+.game-box {
+    background: #111;
+    padding: 15px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+}
 
+#gameCanvas {
+    display: block;
     width: 100%;
-    height: 100%;
-
-    background: rgba(0, 0, 0, 0.75);
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    z-index: 9999;
-
+    max-width: 800px;
+    height: auto;
+    margin: auto;
+    background: #202040;
+    border-radius: 10px;
+    touch-action: manipulation;
 }
 
-.name-form {
-
-    background: white;
-
-    padding: 30px;
-
-    border-radius: 15px;
-
-    width: 90%;
-
-    max-width: 400px;
-
-    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-
-}
-
-.name-form h2 {
-
-    margin-top: 0;
-
-}
-
-.name-form input {
-
-    width: 100%;
-
-    border: 1px solid #ccc;
-
-    margin-bottom: 15px;
-
-}
-
-.name-form button {
-
-    background: #222;
-
+.game-info,
+.game-message {
     color: white;
-
-    width: 100%;
-
+    margin-top: 10px;
+    font-size: 18px;
 }
 
-.name-form button:hover {
-
-    background: #444;
-
-}
-
-#nameMessage {
-
+.game-controls {
     margin-top: 15px;
-
 }
 
-</style>
-
-</head>
-
-
-<body>
-
-
-<!-- =========================================
-     ОКНО ВВОДА ИМЕНИ
-     ========================================= -->
-
-<div class="name-box" id="nameBox">
-
-    <div class="name-form">
-
-        <h2>Добро пожаловать!</h2>
-
-        <p>Введите ваше имя:</p>
-
-        <input
-            type="text"
-            id="visitorName"
-            placeholder="Ваше имя"
-            maxlength="50"
-        >
-
-        <button onclick="sendVisitorName()">
-            Войти
-        </button>
-        <div id="nameMessage"></div>
-
-    </div>
-
-</div>
-
-
-<header>
-
-    <h1>ЭТО МОЙ ПЕРВЫЙ САЙТ</h1>
-
-    <div class="search">
-
-        <input
-            id="searchInput"
-            type="text"
-            placeholder="Что хотите найти?"
-        >
-
-        <button onclick="search()">
-            Поиск
-        </button>
-
-    </div>
-
-
-    <button class="all-button" onclick="showAll()">
-        Показать все фотографии и видео
-    </button>
-
-</header>
-
-
-<div id="results"></div>
-
-
-<script>
-
-
-/* =========================================
-   ОТПРАВКА ИМЕНИ ПОСЕТИТЕЛЯ
-   ========================================= */
-
-async function sendVisitorName() {
-
-    const nameInput =
-        document.getElementById("visitorName");
-
-    const message =
-        document.getElementById("nameMessage");
-
-    const name =
-        nameInput.value.trim();
-
-
-    if (name === "") {
-
-        message.textContent =
-            "Введите имя.";
-
-        return;
-
-    }
-
-
-    message.textContent =
-        "Отправка...";
-
-
-    try {
-
-        const response = await fetch(
-            "ТВОЙ_URL_СЕРВЕРА",
-            {
-
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    name: name
-                })
-
-            }
-        );
-
-
-        if (response.ok) {
-
-            document
-                .getElementById("nameBox")
-                .style.display = "none";
-
-        } else {
-
-            message.textContent =
-                "Не удалось отправить имя.";
-
-        }
-
-
-    } catch (error) {
-
-        message.textContent =
-            "Ошибка соединения.";
-
-    }
-
+.game-controls button {
+    background: #444;
+    color: white;
+    margin: 5px;
 }
 
 
-/*
-=====================================================
-БАЗА ДАННЫХ САЙТА
-=====================================================
-*/
+/* =========================
+   ГЛАВНОЕ МЕНЮ
+========================= */
 
-const pages = [
-
-    // ФОТОГРАФИЯ №1
-
-    {
-        title: "shaxob",
-        text: "shaxob",
-        image: "111.jpg"
-    },
-
-
-    // ВИДЕО №1
-
-    {
-        title: "Моё первое видео",
-        text: "Видео с прогулки",
-        video: "video (2).mp4"
-    },
-
-
-    // ВИДЕО №2
-
-    {
-        title: "видео",
-        text: "Красивое видео",
-        video: "lv_0_20260918160833.mp4"
-    },
-
-
-    // ЕЩЁ ОДНА ФОТОГРАФИЯ
-
-    {
-        title: "Фотография с путешествия",
-        text: "Фото из поездки",
-        image: "photo2.jpg"
-    }
-
-];
-
-
-/*
-=====================================================
-ФУНКЦИЯ ПОКАЗА РЕЗУЛЬТАТОВ
-=====================================================
-*/
-
-function showResults(list) {
-
-    const results =
-        document.getElementById("results");
-
-
-    results.innerHTML = list.map(page => 
-
-        <div class="result">
-
-            <h2>${page.title}</h2>
-
-            <p>${page.text}</p>
-
-
-            ${
-                page.image
-                ?
-
-                
-                <img
-                    src="${page.image}"
-                    alt="${page.title}"
-                    onerror="this.style.display='none'"
-                >
-                
-
-                :
-
-                ""
-            }
-
-
-            ${
-                page.video
-                ?
-
-                
-                <video controls preload="metadata">
-
-                    <source
-                        src="${page.video}"
-                        type="video/mp4"
-                    >
-
-                    Ваш браузер не поддерживает
-                    воспроизведение видео.
-
-                </video>
-                
-
-                :
-
-                ""
-            }
-
-        </div>
-
-    ).join("");
-
+#menu,
+#levels {
+    color: white;
 }
 
-
-/*
-=====================================================
-ПОКАЗАТЬ ВСЕ ФАЙЛЫ
-=====================================================
-*/
-
-function showAll() {
-
-    showResults(pages);
-
+.menu-title {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 15px;
 }
 
+.menu-subtitle {
+    color: #ccc;
+    margin-bottom: 25px;
+}
 
-/*
-=====================================================
-ФУНКЦИЯ ПОИСКА
-=====================================================
-*/
-
-function search() {
-
-    const query =
-        document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase()
-        .trim();
-
-
-    // Если пользователь ничего не ввёл
-    if (query === "") {
-
-        document
-            .getElementById("results")
-            .innerHTML = "";
-
-        return;
-
-    }
-
-
-    /*
-    Ищем одновременно:
-    - по названию;
-    - по описанию.
-    */
-
-    const found = pages.filter(page =>
-
-        page.title
-            .toLowerCase()
-            .includes(query)
-
-        ||
-
-        page.text
-            .toLowerCase()
-            .includes(query)
-
+.level-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(130px, 1fr)
     );
+    gap: 12px;
+    max-width: 650px;
+    margin: 20px auto;
+}
 
+.level-btn {
+    min-height: 90px;
+    background: #333;
+    color: white;
+    border: 2px solid #666;
+}
 
-    // Если ничего не найдено
+.level-btn:hover {
+    border-color: white;
+}
 
-    if (found.length === 0) {
+.level-btn strong {
+    display: block;
+    font-size: 22px;
+}
 
-        document
-            .getElementById("results")
-            .innerHTML = 
+.level-btn span {
+    font-size: 13px;
+    color: #bbb;
+}
 
-            <div class="not-found">
+.back-btn {
+    background: #555;
+    color: white;
+    margin-top: 10px;
+}
 
-                <h2>Ничего не найдено</h2>
-
-                <p>
-                    Попробуйте изменить поисковый запрос.
-                </p>
-
-            </div>
-
-        ;
-
-        return;
-
-    }
-
-
-    // Показываем найденные результаты
-
-    showResults(found);
-
+.hidden {
+    display: none !important;
 }
 
 
-/*
-=====================================================
-ПОИСК ПРИ НАЖАТИИ ENTER
-=====================================================
-*/
+/* =========================
+   ТЕЛЕФОН
+========================= */
 
-document
-    .getElementById("searchInput")
-    .addEventListener(
-        "keydown",
-        function(event) {
-
-            if (event.key === "Enter") {
-
-                search();
-
-            }
-
-        }
-    );
-
-
-</script>
-
-</body>
-
-</html>
+@media (max-width:
