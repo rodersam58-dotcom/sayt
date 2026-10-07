@@ -124,7 +124,7 @@
                 placeholder="Введите название фотографии..."
             >
 
-            <button onclick="searchPhotos()">
+            <button id="searchButton">
                 Поиск
             </button>
 
@@ -134,31 +134,34 @@
 
     <div id="results"></div>
 
+
     <script>
 
+        // База фотографий
         const photos = [
             {
                 title: "Фото",
-                file: "1031176_10.jpg",
-                keywords: "фото"
+                file: "123321.jpg",
+                keywords: "фото фотография"
             }
         ];
 
 
+        // Получаем элементы страницы
+        const searchInput = document.getElementById("searchInput");
+        const searchButton = document.getElementById("searchButton");
+        const results = document.getElementById("results");
+
+
+        // Функция поиска
         function searchPhotos() {
 
-            const query = document
-                .getElementById("searchInput")
-                .value
-                .toLowerCase()
-                .trim();
-
-            const results = document.getElementById("results");
-
-            results.innerHTML = "";
+            const query = searchInput.value
+                .trim()
+                .toLowerCase();
 
 
-            // Если поле поиска пустое
+            // Если ничего не введено
             if (query === "") {
 
                 results.innerHTML = `
@@ -171,21 +174,25 @@
             }
 
 
-            // Поиск фотографии
-            const found = photos.filter(photo =>
-                photo.title.toLowerCase().includes(query) ||
-                photo.file.toLowerCase().includes(query) ||
-                photo.keywords.toLowerCase().includes(query)
-            );
+            // Ищем совпадения
+            const foundPhotos = photos.filter(function(photo) {
+
+                return (
+                    photo.title.toLowerCase().includes(query) ||
+                    photo.file.toLowerCase().includes(query) ||
+                    photo.keywords.toLowerCase().includes(query)
+                );
+
+            });
 
 
-            // Если фотография не найдена
-            if (found.length === 0) {
+            // Если ничего не найдено
+            if (foundPhotos.length === 0) {
 
                 results.innerHTML = `
                     <div class="message">
                         <h2>Фотография не найдена</h2>
-                        <p>Попробуйте другое название.</p>
+                        <p>По запросу: "${query}" ничего не найдено.</p>
                     </div>
                 `;
 
@@ -193,37 +200,48 @@
             }
 
 
-            // Вывод найденных фотографий
-            found.forEach(photo => {
+            // Показываем найденные фотографии
+            results.innerHTML = "";
 
-                results.innerHTML += `
-                    <div class="photo">
 
-                        <h2>${photo.title}</h2>
+            foundPhotos.forEach(function(photo) {
 
-                        <img
-                            src="${photo.file}"
-                            alt="${photo.title}"
-                        >
+                const photoBlock = document.createElement("div");
 
-                    </div>
+                photoBlock.className = "photo";
+
+                photoBlock.innerHTML = `
+                    <h2>${photo.title}</h2>
+
+                    <img
+                        src="${photo.file}"
+                        alt="${photo.title}"
+                    >
+
+                    <p>Файл: ${photo.file}</p>
                 `;
+
+                results.appendChild(photoBlock);
 
             });
 
         }
 
 
+        // Кнопка "Поиск"
+        searchButton.addEventListener("click", searchPhotos);
+
+
         // Поиск при нажатии Enter
-        document
-            .getElementById("searchInput")
-            .addEventListener("keydown", function(event) {
+        searchInput.addEventListener("keydown", function(event) {
 
-                if (event.key === "Enter") {
-                    searchPhotos();
-                }
+            if (event.key === "Enter") {
 
-            });
+                searchPhotos();
+
+            }
+
+        });
 
     </script>
 
