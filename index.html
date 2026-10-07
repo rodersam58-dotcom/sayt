@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>rodersam58 - мой сайт</title>
+
 <meta name="description" content="Официальный сайт rodersam58">
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -16,14 +21,16 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #f2f2f2;
-    text-align: center;
     color: #222;
 }
+
+/* ШАПКА */
 
 header {
     background: #222;
     color: white;
     padding: 30px 15px;
+    text-align: center;
 }
 
 h1 {
@@ -31,14 +38,17 @@ h1 {
     font-size: 30px;
 }
 
+/* ПОИСК */
+
 .search {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 10px;
     flex-wrap: wrap;
 }
 
-input {
+#searchInput {
     width: 60%;
     max-width: 500px;
     padding: 14px;
@@ -72,6 +82,8 @@ button:hover {
     color: white;
 }
 
+/* РЕЗУЛЬТАТЫ */
+
 #results {
     max-width: 900px;
     margin: 30px auto;
@@ -97,33 +109,47 @@ button:hover {
 
 .result img,
 .result video {
+    display: block;
     max-width: 100%;
     width: 600px;
+    margin: 10px auto 0;
     border-radius: 10px;
-    margin-top: 10px;
 }
 
 .result video {
     background: black;
 }
 
+/* ЕСЛИ НИЧЕГО НЕ НАЙДЕНО */
+
 .not-found {
     background: white;
     padding: 30px;
     border-radius: 10px;
+    text-align: center;
 }
 
+/* ТЕЛЕФОН */
+
 @media (max-width: 600px) {
+
+    header {
+        padding: 25px 10px;
+    }
 
     h1 {
         font-size: 25px;
     }
 
-    input {
+    #searchInput {
         width: 100%;
     }
 
-    button {
+    .search-button {
+        width: 100%;
+    }
+
+    .all-button {
         width: 100%;
     }
 
@@ -134,9 +160,13 @@ button:hover {
     .result h2 {
         font-size: 21px;
     }
+
 }
+
 </style>
+
 </head>
+
 
 <body>
 
@@ -149,17 +179,23 @@ button:hover {
         <input
             type="text"
             id="searchInput"
-            placeholder="Введите название..."
+            placeholder="Введите название фото или видео..."
         >
 
-        <button class="search-button" onclick="searchMedia()">
+        <button
+            class="search-button"
+            onclick="searchMedia()"
+        >
             Поиск
         </button>
 
     </div>
 
-    <button class="all-button" onclick="showAll()">
-        Показать все фотографии и видео
+    <button
+        class="all-button"
+        onclick="showAll()"
+    >
+        Показать всё
     </button>
 
 </header>
@@ -170,38 +206,53 @@ button:hover {
 
 <script>
 
+/* =========================
+   ФОТО И ВИДЕО
+========================= */
+
 const media = [
 
     {
-        title: "shaxob",
+        title: "Фотография 1",
         type: "image",
         file: "111.jpg",
-        keywords: "shaxob"
+        keywords: "111 фото фотография"
     },
 
     {
         title: "Фотография 2",
         type: "image",
-        file: "photo2.jpg",
-        keywords: "photo2 фото фотография"
+        file: "6022854_15.jpg",
+        keywords: "6022854 фото фотография"
     },
 
     {
         title: "Видео 1",
+        type: "video",
+        file: "lv_0_20260918160833.mp4",
+        keywords: "lv видео video"
+    },
+
+    {
+        title: "Видео 2",
         type: "video",
         file: "video (2).mp4",
         keywords: "video видео"
     },
 
     {
-        title: "Видео 2",
+        title: "Видео 3",
         type: "video",
-        file: "lv_0_20260918160833.mp4",
-        keywords: "lv видео video"
+        file: "video_2024-04-14_18-23-13.mp4",
+        keywords: "video видео"
     }
 
 ];
 
+
+/* =========================
+   ПОКАЗАТЬ ВСЁ
+========================= */
 
 function showAll() {
 
@@ -210,33 +261,46 @@ function showAll() {
 }
 
 
+/* =========================
+   ПОИСК
+========================= */
+
 function searchMedia() {
 
-    const query = document
-        .getElementById("searchInput")
-        .value
+    const input = document.getElementById("searchInput");
+
+    const query = input.value
         .toLowerCase()
         .trim();
 
+    /* Если поле пустое — показать всё */
+
     if (query === "") {
+
         showAll();
+
         return;
     }
 
-    const results = media.filter(item => {
 
+    const found = media.filter(item => {
         return (
             item.title.toLowerCase().includes(query) ||
-            item.keywords.toLowerCase().includes(query) ||
-            item.file.toLowerCase().includes(query)
+            item.file.toLowerCase().includes(query) ||
+            item.keywords.toLowerCase().includes(query)
         );
 
     });
 
-    displayMedia(results);
+
+    displayMedia(found);
 
 }
 
+
+/* =========================
+   ОТОБРАЖЕНИЕ
+========================= */
 
 function displayMedia(items) {
 
@@ -244,12 +308,20 @@ function displayMedia(items) {
 
     results.innerHTML = "";
 
+
+    /* Ничего не найдено */
+
     if (items.length === 0) {
 
         results.innerHTML = 
             <div class="not-found">
+
                 <h2>Ничего не найдено</h2>
-                <p>Попробуйте другое название.</p>
+
+                <p>
+                    Попробуйте другое название.
+                </p>
+
             </div>
         ;
 
@@ -257,58 +329,94 @@ function displayMedia(items) {
     }
 
 
+    /* Вывод найденных файлов */
+
     items.forEach(item => {
 
-        const div = document.createElement("div");
+        const result = document.createElement("div");
 
-        div.className = "result";
+        result.className = "result";
 
+
+        /* ФОТО */
 
         if (item.type === "image") {
-            div.innerHTML = 
+
+            result.innerHTML = 
+
                 <h2>${item.title}</h2>
+
                 <p>Фотография</p>
-                <img src="${item.file}" alt="${item.title}">
+
+                <img
+                    src="${item.file}"
+                    alt="${item.title}"
+                >
+
             ;
 
         }
 
+
+        /* ВИДЕО */
 
         if (item.type === "video") {
 
-            div.innerHTML = 
+            result.innerHTML = 
+
                 <h2>${item.title}</h2>
+
                 <p>Видео</p>
+
                 <video controls>
-                    <source src="${item.file}" type="video/mp4">
+
+                    <source
+                        src="${item.file}"
+                        type="video/mp4"
+                    >
+
                     Ваш браузер не поддерживает видео.
+
                 </video>
+
             ;
 
         }
 
 
-        results.appendChild(div);
+        results.appendChild(result);
 
     });
 
 }
 
 
+/* =========================
+   ENTER = ПОИСК
+========================= */
+
 document
     .getElementById("searchInput")
     .addEventListener("keydown", function(event) {
 
         if (event.key === "Enter") {
+
             searchMedia();
+
         }
 
     });
 
+
+/* =========================
+   ПРИ ОТКРЫТИИ САЙТА
+   ПОКАЗЫВАЕМ ВСЁ
+========================= */
 
 showAll();
 
 </script>
 
 </body>
+
 </html>
