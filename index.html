@@ -1,337 +1,121 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Поиск — rodersam58</title>
 
-    <title>Поиск фотографий и информации</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      color: #222;
+    }
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+    header {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 25px 10px;
+    }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
-            color: #222;
-        }
+    main {
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 20px;
+    }
 
-        header {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 35px 15px;
-        }
+    form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-        h1 {
-            margin: 0 0 25px;
-        }
+    input {
+      flex: 1;
+      min-width: 180px;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
 
-        .search {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
+    button {
+      padding: 14px 20px;
+      background: #222;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
 
-        #searchInput {
-            width: 500px;
-            max-width: 70%;
-            padding: 14px;
-            font-size: 17px;
-            border: none;
-            border-radius: 8px;
-            outline: none;
-        }
-
-        button {
-            padding: 14px 22px;
-            font-size: 17px;
-            border: none;
-            border-radius: 8px;
-            background: #1877f2;
-            color: white;
-            cursor: pointer;
-        }
-
-        button:hover {
-            filter: brightness(1.1);
-        }
-
-        #results {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 15px;
-        }
-
-        .photo {
-            background: white;
-            margin-bottom: 25px;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .photo h2 {
-            margin-top: 0;
-        }
-
-        .photo img {
-            max-width: 100%;
-            width: 600px;
-            border-radius: 10px;
-            display: block;
-        }
-
-        .message {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        /* Google Search */
-        #googleSearch {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 25px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        #googleSearch h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-        }
-
-        /* Немного улучшаем внешний вид Google поиска */
-        .gsc-control-cse {
-            padding: 0 !important;
-            border: none !important;
-            background: transparent !important;
-        }
-
-        .gsc-search-box {
-            margin-bottom: 15px !important;
-        }
-
-        @media (max-width: 600px) {
-
-            .search {
-                flex-direction: column;
-            }
-
-            #searchInput {
-                max-width: 100%;
-                width: 100%;
-            }
-
-            button {
-                width: 100%;
-            }
-
-            #googleSearch {
-                margin: 20px 15px;
-                padding: 20px;
-            }
-
-            #results {
-                margin: 20px auto;
-            }
-        }
-    </style>
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 
 <body>
+  <header>
+    <h1>rodersam58</h1>
+    <p>Поиск информации с помощью Google Gemini</p>
+  </header>
 
-    <header>
+  <main>
+    <h2>Что хочешь узнать?</h2>
 
-        <h1>Поиск фотографий</h1>
+    <form id="gemini-search">
+      <input
+        id="car-search"
+        type="text"
+        placeholder="Например, BMW M5"
+        required
+      >
 
-        <div class="search">
+      <button type="submit">Найти</button>
+    </form>
 
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Введите название фотографии..."
-            >
-
-            <button id="searchButton">
-                Поиск
-            </button>
-
-        </div>
-
-    </header>
-
-
-    <!-- Результаты поиска фотографий -->
-
-    <div id="results"></div>
-
-
-    <!-- Google Search -->
-
-    <div id="googleSearch">
-
-        <h2>Поиск информации в Google</h2>
-
-        <script
-            async
-            src="https://cse.google.com/cse.js?cx=803134d6033d74c93">
-        </script>
-
-        <div class="gcse-search"></div>
-
+    <div id="result">
+      Здесь появится твой запрос.
     </div>
+  </main>
 
+  <script>
+    document
+      .getElementById("gemini-search")
+      .addEventListener("submit", async function(event) {
+        event.preventDefault();
 
-    <script>
+        const query = document
+          .getElementById("car-search")
+          .value.trim();
 
-        // ==========================================
-        // БАЗА ФОТОГРАФИЙ
-        // ==========================================
+        if (!query) return;
 
-        const photos = [
-            {
-                title: "Фото",
-                file: "123321.jpg",
-                keywords: "фото фотография"
-            }
-        ];
+        const prompt =
+          "Расскажи подробно о " + query +
+          ": характеристики, мощность, скорость и цена.";
 
+        document.getElementById("result").textContent =
+          "Твой запрос: " + prompt +
+          "\n\nОткрой Google Gemini и вставь этот текст.";
 
-        // ==========================================
-        // ЭЛЕМЕНТЫ СТРАНИЦЫ
-        // ==========================================
-
-        const searchInput = document.getElementById("searchInput");
-        const searchButton = document.getElementById("searchButton");
-        const results = document.getElementById("results");
-
-
-        // ==========================================
-        // ПОИСК ФОТОГРАФИЙ
-        // ==========================================
-
-        function searchPhotos() {
-
-            const query = searchInput.value
-                .trim()
-                .toLowerCase();
-
-
-            // Если ничего не введено
-
-            if (query === "") {
-
-                results.innerHTML = `
-                    <div class="message">
-                        <h2>Введите название фотографии</h2>
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            // Ищем совпадения
-
-            const foundPhotos = photos.filter(function(photo) {
-
-                return (
-                    photo.title.toLowerCase().includes(query) ||
-                    photo.file.toLowerCase().includes(query) ||
-                    photo.keywords.toLowerCase().includes(query)
-                );
-
-            });
-
-
-            // Если фотография не найдена
-
-            if (foundPhotos.length === 0) {
-
-                results.innerHTML = `
-                    <div class="message">
-                        <h2>Фотография не найдена</h2>
-
-                        <p>
-                            По запросу:
-                            "<strong>${query}</strong>"
-                            фотографий нет.
-                        </p>
-
-                        <p>
-                            Но ниже можно посмотреть информацию
-                            по этому запросу в Google.
-                        </p>
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            // Очищаем старые результаты
-
-            results.innerHTML = "";
-
-
-            // Показываем найденные фотографии
-
-            foundPhotos.forEach(function(photo) {
-
-                const photoBlock = document.createElement("div");
-
-                photoBlock.className = "photo";
-
-                photoBlock.innerHTML = `
-                    <h2>${photo.title}</h2>
-
-                    <img
-                        src="${photo.file}"
-                        alt="${photo.title}"
-                    >
-
-                    <p>
-                        Файл: ${photo.file}
-                    </p>
-                `;
-
-                results.appendChild(photoBlock);
-
-            });
-
+        try {
+          await navigator.clipboard.writeText(prompt);
+        } catch (error) {
+          // Если копирование недоступно, запрос всё равно виден на странице.
         }
 
-
-        // ==========================================
-        // КНОПКА ПОИСКА ФОТОГРАФИЙ
-        // ==========================================
-
-        searchButton.addEventListener("click", searchPhotos);
-
-
-        // ==========================================
-        // ENTER
-        // ==========================================
-
-        searchInput.addEventListener("keydown", function(event) {
-
-            if (event.key === "Enter") {
-
-                searchPhotos();
-
-            }
-
-        });
-
-    </script>
-
+        window.open(
+          "https://gemini.google.com/app",
+          "_blank"
+        );
+      });
+  </script>
 </body>
-
 </html>
