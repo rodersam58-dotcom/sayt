@@ -1,121 +1,181 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Поиск — rodersam58</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      color: #222;
-    }
-
-    header {
-      background: #222;
-      color: white;
-      text-align: center;
-      padding: 25px 10px;
-    }
-
-    main {
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 20px;
-    }
-
-    form {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    input {
-      flex: 1;
-      min-width: 180px;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    button {
-      padding: 14px 20px;
-      background: #222;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    #result {
-      margin-top: 20px;
-      padding: 15px;
-      background: white;
-      border-radius: 8px;
-      line-height: 1.6;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subway Runner</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #101827;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+h1 { color: #ffd43b; margin: 12px; }
+#info {
+  display: flex;
+  justify-content: space-around;
+  font-size: 18px;
+  margin: 10px auto;
+  max-width: 420px;
+}
+#game {
+  display: block;
+  width: min(96vw, 400px);
+  height: auto;
+  margin: auto;
+  border: 3px solid #ffd43b;
+  border-radius: 12px;
+  background: #222;
+  touch-action: none;
+}
+#controls {
+  max-width: 400px;
+  margin: 12px auto;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+button {
+  background: #ffca28;
+  border: 0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#restart { font-size: 16px; }
+p { color: #ccd6e5; }
+</style>
 </head>
-
 <body>
-  <header>
-    <h1>rodersam58</h1>
-    <p>Поиск информации с помощью Google Gemini</p>
-  </header>
 
-  <main>
-    <h2>Что хочешь узнать?</h2>
+<h1>🚆 SUBWAY RUNNER</h1>
 
-    <form id="gemini-search">
-      <input
-        id="car-search"
-        type="text"
-        placeholder="Например, BMW M5"
-        required
-      >
+<div id="info">
+  <span>Счёт: <b id="score">0</b></span>
+  <span>🪙 <b id="coins">0</b></span>
+</div>
 
-      <button type="submit">Найти</button>
-    </form>
+<canvas id="game" width="400" height="600"></canvas>
 
-    <div id="result">
-      Здесь появится твой запрос.
-    </div>
-  </main>
+<div id="controls">
+  <button id="left">⬅️</button>
+  <button id="jump">⬆️</button>
+  <button id="slide">⬇️</button>
+  <button id="right">➡️</button>
+</div>
 
-  <script>
-    document
-      .getElementById("gemini-search")
-      .addEventListener("submit", async function(event) {
-        event.preventDefault();
+<button id="restart">🔄 Начать заново</button>
+<p>Свайпай по экрану или используй стрелки на клавиатуре.</p>
 
-        const query = document
-          .getElementById("car-search")
-          .value.trim();
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
 
-        if (!query) return;
+const scoreText = document.getElementById("score");
+const coinsText = document.getElementById("coins");
 
-        const prompt =
-          "Расскажи подробно о " + query +
-          ": характеристики, мощность, скорость и цена.";
+const W = 400, H = 600;
+const lanes = [90, 200, 310];
 
-        document.getElementById("result").textContent =
-          "Твой запрос: " + prompt +
-          "\n\nОткрой Google Gemini и вставь этот текст.";
+let player, obstacles, coins, score, collected;
+let speed, spawnTimer, coinTimer, roadOffset;
+let running, lastTime, animationId;
 
-        try {
-          await navigator.clipboard.writeText(prompt);
-        } catch (error) {
-          // Если копирование недоступно, запрос всё равно виден на странице.
-        }
+function reset() {
+  cancelAnimationFrame(animationId);
 
-        window.open(
-          "https://gemini.google.com/app",
-          "_blank"
-        );
-      });
-  </script>
-</body>
-</html>
+  player = {
+    lane: 1,
+    jump: 0,
+    slide: 0
+  };
+
+  obstacles = [];
+  coins = [];
+  score = 0;
+  collected = 0;
+  speed = 5;
+  spawnTimer = 0;
+  coinTimer = 0;
+  roadOffset = 0;
+  running = true;
+  lastTime = 0;
+
+  scoreText.textContent = "0";
+  coinsText.textContent = "0";
+
+  animationId = requestAnimationFrame(loop);
+}
+
+function move(direction) {
+  if (!running) return;
+
+  if (direction === "left") {
+    player.lane = Math.max(0, player.lane - 1);
+  }
+
+  if (direction === "right") {
+    player.lane = Math.min(2, player.lane + 1);
+  }
+
+  if (direction === "jump" && player.jump === 0 &&
+      player.slide === 0) {
+    player.jump = 1;
+  }
+
+  if (direction === "slide" && player.slide === 0 &&
+      player.jump === 0) {
+    player.slide = 30;
+  }
+}
+
+document.getElementById("left").onclick = () => move("left");
+document.getElementById("right").onclick = () => move("right");
+document.getElementById("jump").onclick = () => move("jump");
+document.getElementById("slide").onclick = () => move("slide");
+document.getElementById("restart").onclick = reset;
+
+document.addEventListener("keydown", e => {
+  if (["ArrowLeft", "ArrowRight", "ArrowUp",
+       "ArrowDown", " "].includes(e.key)) {
+    e.preventDefault();
+  }
+
+  if (e.key === "ArrowLeft" || e.key === "a") move("left");
+  if (e.key === "ArrowRight" || e.key === "d") move("right");
+  if (e.key === "ArrowUp" || e.key === " ") move("jump");
+  if (e.key === "ArrowDown" || e.key === "s") move("slide");
+  if (e.key === "Enter" && !running) reset();
+});
+
+let touchX = 0, touchY = 0;
+
+canvas.addEventListener("pointerdown", e => {
+  touchX = e.clientX;
+  touchY = e.clientY;
+});
+
+canvas.addEventListener("pointerup", e => {
+  const dx = e.clientX - touchX;
+  const dy = e.clientY - touchY;
+
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < 25) return;
+
+  if (Math.abs(dx) > Math.abs(dy)) {
+    move(dx < 0 ? "left" : "right");
+  } else {
+    move(dy < 0 ? "jump" : "slide");
+  }
+});
+
+function drawBackground() {
+  const sky = ctx.createLinearGradient(0, 0, 0, H);
+  sky.addColorStop(0, "#42b9ed");
+  sky.addColorStop(0.45, "#b8e7f5");
+  sky.addColorStop(0.46, "#555b65");
+  sky.addColorStop(1, "#242832");
