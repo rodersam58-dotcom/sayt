@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -6,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Поиск фотографий</title>
+    <title>Поиск фотографий и информации</title>
 
     <style>
         * {
@@ -93,7 +92,34 @@
             text-align: center;
         }
 
+        /* Google Search */
+        #googleSearch {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #googleSearch h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* Немного улучшаем внешний вид Google поиска */
+        .gsc-control-cse {
+            padding: 0 !important;
+            border: none !important;
+            background: transparent !important;
+        }
+
+        .gsc-search-box {
+            margin-bottom: 15px !important;
+        }
+
         @media (max-width: 600px) {
+
             .search {
                 flex-direction: column;
             }
@@ -105,6 +131,15 @@
 
             button {
                 width: 100%;
+            }
+
+            #googleSearch {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+
+            #results {
+                margin: 20px auto;
             }
         }
     </style>
@@ -132,12 +167,34 @@
 
     </header>
 
+
+    <!-- Результаты поиска фотографий -->
+
     <div id="results"></div>
+
+
+    <!-- Google Search -->
+
+    <div id="googleSearch">
+
+        <h2>Поиск информации в Google</h2>
+
+        <script
+            async
+            src="https://cse.google.com/cse.js?cx=803134d6033d74c93">
+        </script>
+
+        <div class="gcse-search"></div>
+
+    </div>
 
 
     <script>
 
-        // База фотографий
+        // ==========================================
+        // БАЗА ФОТОГРАФИЙ
+        // ==========================================
+
         const photos = [
             {
                 title: "Фото",
@@ -147,13 +204,19 @@
         ];
 
 
-        // Получаем элементы страницы
+        // ==========================================
+        // ЭЛЕМЕНТЫ СТРАНИЦЫ
+        // ==========================================
+
         const searchInput = document.getElementById("searchInput");
         const searchButton = document.getElementById("searchButton");
         const results = document.getElementById("results");
 
 
-        // Функция поиска
+        // ==========================================
+        // ПОИСК ФОТОГРАФИЙ
+        // ==========================================
+
         function searchPhotos() {
 
             const query = searchInput.value
@@ -162,6 +225,7 @@
 
 
             // Если ничего не введено
+
             if (query === "") {
 
                 results.innerHTML = `
@@ -175,6 +239,7 @@
 
 
             // Ищем совпадения
+
             const foundPhotos = photos.filter(function(photo) {
 
                 return (
@@ -186,13 +251,24 @@
             });
 
 
-            // Если ничего не найдено
+            // Если фотография не найдена
+
             if (foundPhotos.length === 0) {
 
                 results.innerHTML = `
                     <div class="message">
                         <h2>Фотография не найдена</h2>
-                        <p>По запросу: "${query}" ничего не найдено.</p>
+
+                        <p>
+                            По запросу:
+                            "<strong>${query}</strong>"
+                            фотографий нет.
+                        </p>
+
+                        <p>
+                            Но ниже можно посмотреть информацию
+                            по этому запросу в Google.
+                        </p>
                     </div>
                 `;
 
@@ -200,9 +276,12 @@
             }
 
 
-            // Показываем найденные фотографии
+            // Очищаем старые результаты
+
             results.innerHTML = "";
 
+
+            // Показываем найденные фотографии
 
             foundPhotos.forEach(function(photo) {
 
@@ -218,7 +297,9 @@
                         alt="${photo.title}"
                     >
 
-                    <p>Файл: ${photo.file}</p>
+                    <p>
+                        Файл: ${photo.file}
+                    </p>
                 `;
 
                 results.appendChild(photoBlock);
@@ -228,11 +309,17 @@
         }
 
 
-        // Кнопка "Поиск"
+        // ==========================================
+        // КНОПКА ПОИСКА ФОТОГРАФИЙ
+        // ==========================================
+
         searchButton.addEventListener("click", searchPhotos);
 
 
-        // Поиск при нажатии Enter
+        // ==========================================
+        // ENTER
+        // ==========================================
+
         searchInput.addEventListener("keydown", function(event) {
 
             if (event.key === "Enter") {
@@ -248,4 +335,3 @@
 </body>
 
 </html>
-```
